@@ -15,6 +15,14 @@ public class CustomItemAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<String> mArrItemData;
 
+    static class ViewHolder {
+        TextView txtDescription;
+        TextView txtTimeRemain;
+        Button btnDelete;
+        Button btnEdit;
+        int position;
+    }
+
     public CustomItemAdapter(Context context, ArrayList arrItemData) {
         super();
         mContext = context;
@@ -27,33 +35,45 @@ public class CustomItemAdapter extends BaseAdapter {
     }
 
     // getView method is called for each item of ListView
-    public View getView(int position, View view, ViewGroup parent) {
-        // inflate the layout for each item of listView
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(R.layout.activity_item, parent, false);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
 
+        if(convertView == null){
 
-        // get the reference of textView and button
-        TextView txtDescription = view.findViewById(R.id.textViewDescription);
-        Button btnDelete = view.findViewById(R.id.buttonDelete);
-        Button btnEdit = view.findViewById(R.id.buttonEdit);
+            // inflate the layout
+            LayoutInflater inflater = ((MainActivity) mContext).getLayoutInflater();
+            convertView = inflater.inflate(R.layout.activity_item, parent, false);
 
-        txtDescription.setText(mArrItemData.get(position));
+            // well set up the ViewHolder
+            viewHolder = new ViewHolder();
+            viewHolder.txtDescription = convertView.findViewById(R.id.textViewDescription);
+            viewHolder.txtDescription.setText(mArrItemData.get(position));
+            viewHolder.txtTimeRemain = convertView.findViewById(R.id.textViewTime);
+            viewHolder.btnDelete = convertView.findViewById(R.id.buttonDelete);
+            viewHolder.btnEdit = convertView.findViewById(R.id.buttonEdit);
+            // store the holder with the view.
+            convertView.setTag(viewHolder);
 
-        btnDelete.setOnClickListener(new View.OnClickListener() {
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        viewHolder.position = position;
+
+        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Logic goes here
             }
         });
-        btnEdit.setOnClickListener(new View.OnClickListener() {
+        viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Logic goes here
             }
         });
 
-        return view;
+        return convertView;
     }
 
     public Object getItem(int position) {
