@@ -6,4 +6,5 @@
 
     <string name="btnDelete">Delete</string>
     <string name="btnEdit">Edit</string>
+    <string name="btnAdd">Add</string>
 </resources>

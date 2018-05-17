@@ -20,6 +20,7 @@ public class CustomItemAdapter extends BaseAdapter {
         TextView txtTimeRemain;
         Button btnDelete;
         Button btnEdit;
+        int id;
         int position;
     }
 
