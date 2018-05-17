@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ToDoApp</string>
+    <string name="title_activity_item">Item</string>
+    <string name="buttonText">Button</string>
+    <string name="textView">TextView</string>
+
+    <string name="btnDelete">Delete</string>
+    <string name="btnEdit">Edit</string>
 </resources>
