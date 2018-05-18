@@ -6,5 +6,10 @@
 
     <string name="btnDelete">Delete</string>
     <string name="btnEdit">Edit</string>
+    <string name="btnUpdate">Update</string>
     <string name="btnAdd">Add</string>
+
+    <string name="textViewTime">Time</string>
+    <string name="textViewDate">Date</string>
+    <string name="textViewDescription">Description</string>
 </resources>

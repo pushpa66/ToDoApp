@@ -1,6 +1,7 @@
 package com.example.pushpe.todoapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,19 +9,21 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.pushpe.todoapp.Database.ToDo;
+
 import java.util.ArrayList;
 
 public class CustomItemAdapter extends BaseAdapter {
 
     private Context mContext;
-    private ArrayList<String> mArrItemData;
+    private ArrayList<ToDo> mArrItemData;
 
     static class ViewHolder {
         TextView txtDescription;
-        TextView txtTimeRemain;
+        TextView txtDateTime;
         Button btnDelete;
         Button btnEdit;
-        int id;
+        long id;
         int position;
     }
 
@@ -36,8 +39,8 @@ public class CustomItemAdapter extends BaseAdapter {
     }
 
     // getView method is called for each item of ListView
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final ViewHolder viewHolder;
 
         if(convertView == null){
 
@@ -48,8 +51,12 @@ public class CustomItemAdapter extends BaseAdapter {
             // well set up the ViewHolder
             viewHolder = new ViewHolder();
             viewHolder.txtDescription = convertView.findViewById(R.id.textViewDescription);
-            viewHolder.txtDescription.setText(mArrItemData.get(position));
-            viewHolder.txtTimeRemain = convertView.findViewById(R.id.textViewTime);
+            viewHolder.txtDescription.setText(mArrItemData.get(position).getTodo());
+
+            viewHolder.txtDateTime = convertView.findViewById(R.id.textViewDateTime);
+            viewHolder.txtDateTime.setText(mArrItemData.get(position).getTimestamp());
+
+            viewHolder.id = mArrItemData.get(position).getId();
             viewHolder.btnDelete = convertView.findViewById(R.id.buttonDelete);
             viewHolder.btnEdit = convertView.findViewById(R.id.buttonEdit);
             // store the holder with the view.
@@ -64,13 +71,19 @@ public class CustomItemAdapter extends BaseAdapter {
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Logic goes here
+                Intent intent = new Intent(mContext, EditActivity.class);
+//                intent.putExtra("DESCRIPTION", );
+                mContext.startActivity(intent);
             }
         });
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Logic goes here
+                Intent intent = new Intent(mContext, EditActivity.class);
+                intent.putExtra("DESCRIPTION", viewHolder.txtDescription.getText().toString());
+                intent.putExtra("DATE_TIME", viewHolder.txtDateTime.getText().toString());
+                intent.putExtra("ID", viewHolder.id);
+                mContext.startActivity(intent);
             }
         });
 

@@ -17,14 +17,14 @@
         android:layout_marginTop="2dp"
         android:background="@android:color/holo_blue_bright"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddToDo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonAdd"
+        android:id="@+id/btnAddToDo"
         android:layout_width="80dp"
         android:layout_height="40dp"
         android:text="@string/btnAdd"

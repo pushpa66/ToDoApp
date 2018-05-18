@@ -24,12 +24,18 @@ public class ToDo {
                     + COLUMN_TIMESTAMP + " TEXT"
                     + ")";
 
-    public ToDo() {
+    public ToDo(){
+
     }
 
-    public ToDo(int id, String note, String timestamp) {
+    public ToDo(String description, String timestamp) {
+        this.todo = description;
+        this.timestamp = timestamp;
+    }
+
+    public ToDo(int id, String description, String timestamp) {
         this.id = id;
-        this.todo = note;
+        this.todo = description;
         this.timestamp = timestamp;
     }
 
