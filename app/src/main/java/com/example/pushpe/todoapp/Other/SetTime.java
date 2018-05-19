@@ -24,8 +24,7 @@ public class SetTime implements View.OnClickListener, TimePickerDialog.OnTimeSet
 
     @Override
     public void onClick (View v) {
-        int hour = myCalendar.get(Calendar.HOUR);
-//            int hour24 = myCalendar.get(Calendar.HOUR_OF_DAY);
+        int hour = myCalendar.get(Calendar.HOUR_OF_DAY);
         int minute = myCalendar.get(Calendar.MINUTE);
         new TimePickerDialog(ctx, this, hour, minute, false).show();
     }

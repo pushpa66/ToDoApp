@@ -1,7 +1,9 @@
 package com.example.pushpe.todoapp;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.pushpe.todoapp.Database.DatabaseHelper;
 import com.example.pushpe.todoapp.Database.ToDo;
 
 import java.util.ArrayList;
@@ -71,9 +74,30 @@ public class CustomItemAdapter extends BaseAdapter {
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, EditActivity.class);
-//                intent.putExtra("DESCRIPTION", );
-                mContext.startActivity(intent);
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                //Yes button clickeda
+                                DatabaseHelper dbHelper = new DatabaseHelper(mContext);
+                                ToDo toDo = new ToDo(viewHolder.id, viewHolder.txtDescription.getText().toString(), viewHolder.txtDateTime.getText().toString());
+                                dbHelper.deleteToDo(toDo);
+                                dialog.dismiss();
+                                Intent intent = new Intent(mContext, MainActivity.class);
+                                mContext.startActivity(intent);
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                dialog.dismiss();
+                                break;
+                        }
+                    }
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
             }
         });
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +111,7 @@ public class CustomItemAdapter extends BaseAdapter {
             }
         });
 
+
         return convertView;
     }
 
@@ -98,4 +123,5 @@ public class CustomItemAdapter extends BaseAdapter {
     public long getItemId(int position) {
         // TODO Auto-generated method stub
         return position;
-    }}
+    }
+}

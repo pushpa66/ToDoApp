@@ -18,6 +18,7 @@ public class EditActivity extends AppCompatActivity {
     private TextView date, time;
     private EditText description;
     private DatabaseHelper dbHelper;
+    private long id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,19 +27,43 @@ public class EditActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String strDescription = intent.getStringExtra("DESCRIPTION");
         String strDateTime = intent.getStringExtra("DATE_TIME");
-        long id = intent.getLongExtra("ID", 0);
+        this.id = intent.getLongExtra("ID", 0);
 
-        int year = 2018;
-        int month = 1;
-        int day = 1;
+        String[] parts = strDateTime.split("-");
+        String strDate = parts[0];
+        String strTime = parts[1];
 
-        int hour = 1;
-        int minute = 1;
+        parts = strDateTime.split("/");
+        int year = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+
+        strDateTime = parts[2];
+        parts = strDateTime.split("-");
+        int day = Integer.parseInt(parts[0]);
+
+        strDateTime = parts[1];
+        parts = strDateTime.split(":");
+
+        int hour = Integer.parseInt(parts[0]);
+
+        strDateTime = parts[1];
+
+        parts = strDateTime.split(" ");
+
+        int minute = Integer.parseInt(parts[0]);
+        String AmPm = parts[1];
+
+        if (AmPm.equals("PM")){
+            hour += 12;
+        }
 
         date = findViewById(R.id.txtViewDate);
         time = findViewById(R.id.txtViewTime);
         description = findViewById(R.id.editTextDescription);
-        description.setText(strDateTime);
+        description.setText(strDescription);
+
+        date.setText(strDate);
+        time.setText(strTime);
 
         Button addToDo = findViewById(R.id.btnAddToDo);
 
@@ -52,10 +77,12 @@ public class EditActivity extends AppCompatActivity {
             {
                 String timestamp = date.getText().toString() + "-" + time.getText().toString();
                 String strDescription = description.getText().toString();
-                ToDo toDo = new ToDo(strDescription,timestamp);
+                ToDo toDo = new ToDo(id, strDescription,timestamp);
 
                 dbHelper = new DatabaseHelper(EditActivity.this);
-                long id = dbHelper.insertToDo(toDo);
+                dbHelper.updateToDo(toDo);
+                Intent intent = new Intent(EditActivity.this,MainActivity.class);
+                startActivity(intent);
             }
         });
     }

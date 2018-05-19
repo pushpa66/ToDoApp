@@ -11,7 +11,7 @@ public class ToDo {
     public static final String COLUMN_DESCRIPTION = "todo";
     public static final String COLUMN_TIMESTAMP = "timestamp";
 
-    private int id;
+    private long id;
     private String todo;
     private String timestamp;
 
@@ -33,13 +33,13 @@ public class ToDo {
         this.timestamp = timestamp;
     }
 
-    public ToDo(int id, String description, String timestamp) {
+    public ToDo(long id, String description, String timestamp) {
         this.id = id;
         this.todo = description;
         this.timestamp = timestamp;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
