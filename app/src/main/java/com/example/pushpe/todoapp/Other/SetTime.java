@@ -18,9 +18,7 @@ public class SetTime implements View.OnClickListener, TimePickerDialog.OnTimeSet
         this.textView.setOnClickListener(this);
         this.myCalendar = Calendar.getInstance();
         this.ctx = ctx;
-
     }
-
 
     @Override
     public void onClick (View v) {

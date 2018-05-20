@@ -17,13 +17,14 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<ToDo> toDoArrayList;
     DatabaseHelper dbHelper;
+    ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView mListview = findViewById(R.id.listViewToDo);
+        mListView = findViewById(R.id.listViewToDo);
 
         Button btnAddToDo = findViewById(R.id.btnAddToDo);
 
@@ -44,8 +45,17 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize adapter and set adapter to list view
         CustomItemAdapter mAdapter = new CustomItemAdapter(MainActivity.this, toDoArrayList);
-        mListview.setAdapter(mAdapter);
+        mListView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        CustomItemAdapter mAdapter = new CustomItemAdapter(MainActivity.this, toDoArrayList);
+        mListView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+
     }
 
     private void goToAddToDo(View view)

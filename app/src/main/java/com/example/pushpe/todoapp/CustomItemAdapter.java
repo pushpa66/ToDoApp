@@ -3,6 +3,7 @@ package com.example.pushpe.todoapp;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.example.pushpe.todoapp.Database.DatabaseHelper;
 import com.example.pushpe.todoapp.Database.ToDo;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CustomItemAdapter extends BaseAdapter {
 
@@ -45,6 +47,7 @@ public class CustomItemAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
 
+
         if(convertView == null){
 
             // inflate the layout
@@ -63,13 +66,18 @@ public class CustomItemAdapter extends BaseAdapter {
             viewHolder.btnDelete = convertView.findViewById(R.id.buttonDelete);
             viewHolder.btnEdit = convertView.findViewById(R.id.buttonEdit);
             // store the holder with the view.
+
+            this.setBackground(convertView, mArrItemData.get(position).getTimestamp());
+
             convertView.setTag(viewHolder);
 
         }else{
+            this.setBackground(convertView, mArrItemData.get(position).getTimestamp());
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         viewHolder.position = position;
+
 
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +108,7 @@ public class CustomItemAdapter extends BaseAdapter {
                         .setNegativeButton("No", dialogClickListener).show();
             }
         });
+
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,5 +132,42 @@ public class CustomItemAdapter extends BaseAdapter {
     public long getItemId(int position) {
         // TODO Auto-generated method stub
         return position;
+    }
+
+    private void setBackground(View convertView, String strDateTime){
+        String[] parts;
+        parts = strDateTime.split("-");
+        parts = strDateTime.split("/");
+        int year = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
+
+        strDateTime = parts[2];
+        parts = strDateTime.split("-");
+        int day = Integer.parseInt(parts[0]);
+
+        strDateTime = parts[1];
+        parts = strDateTime.split(":");
+
+        int hour = Integer.parseInt(parts[0]);
+
+        strDateTime = parts[1];
+
+        parts = strDateTime.split(" ");
+
+        int minute = Integer.parseInt(parts[0]);
+        String AmPm = parts[1];
+
+        if (AmPm.equals("PM")){
+            hour += 12;
+        }
+
+        Calendar myCalendar = Calendar.getInstance();
+        long time = Calendar.getInstance().getTimeInMillis();
+        myCalendar.set(year, month - 1, day, hour, minute);
+        long time2 = myCalendar.getTimeInMillis();
+
+        if(time>time2){
+            convertView.setBackgroundColor(Color.parseColor("#ff4646"));
+        }
     }
 }

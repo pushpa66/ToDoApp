@@ -38,6 +38,8 @@ public class SetDate implements View.OnClickListener, DatePickerDialog.OnDateSet
         String strMonth;
         String strDay;
 
+        month += 1;
+
         if (month < 10){
             strMonth = "0" + month;
         } else {

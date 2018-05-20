@@ -24,7 +24,7 @@ public class SetDateFromDB implements View.OnClickListener, DatePickerDialog.OnD
 
     @Override
     public void onClick (View v) {
-        new DatePickerDialog(ctx, this, year, month, day).show();
+        new DatePickerDialog(ctx, this, year, month - 1, day).show();
     }
 
     @Override
@@ -32,6 +32,7 @@ public class SetDateFromDB implements View.OnClickListener, DatePickerDialog.OnD
         String strMonth;
         String strDay;
 
+        month += 1;
         if (month < 10){
             strMonth = "0" + month;
         } else {
